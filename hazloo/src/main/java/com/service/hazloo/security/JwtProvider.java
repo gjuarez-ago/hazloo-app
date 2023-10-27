@@ -1,10 +1,6 @@
 package com.service.hazloo.security;
 
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -53,8 +49,6 @@ public class JwtProvider {
 	
 	
 	public boolean validateToken(String token) {
-		
-		List<String> list = new ArrayList();
 		
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);

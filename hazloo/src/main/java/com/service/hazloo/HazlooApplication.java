@@ -28,7 +28,7 @@ public class HazlooApplication implements CommandLineRunner{
 		roleRepository.save(adminRole);
 		
 		Role userRole = new Role();
-		userRole.setName("ROLE_ADMIN");
+		userRole.setName("ROLE_USER");
 		roleRepository.save(userRole);
 	
 	}

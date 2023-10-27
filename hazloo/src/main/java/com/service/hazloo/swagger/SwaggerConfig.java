@@ -42,7 +42,7 @@ public class SwaggerConfig {
 	                .securityContexts(Arrays.asList(securityContext()))
 	                .securitySchemes(Arrays.asList(apiKey()))
 	                .select()
-	                .apis(RequestHandlerSelectors.basePackage("com.spring.blog.controller"))
+	                .apis(RequestHandlerSelectors.basePackage("com.service.hazloo.controller"))
 	                .paths(PathSelectors.any())
 	                .build();
 	    }

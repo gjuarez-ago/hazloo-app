@@ -1,0 +1,19 @@
+
+server:
+  port: 8081
+#  error:
+#    whitelabel:
+#      enabled: false
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://187.188.105.90:1477;databaseName=testDB  #change this to your database url
+    password: Ago0102!* #change this to your database password 
+    username: UserLuisF #change this to your database username
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect

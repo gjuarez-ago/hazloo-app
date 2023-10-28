@@ -3,11 +3,14 @@ package com.service.hazloo.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,6 +39,11 @@ public class Task implements Serializable {
     private String[] labels;
 
     private Long prioridad;
+
+	private boolean status;
+
+	@ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	private User user;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;

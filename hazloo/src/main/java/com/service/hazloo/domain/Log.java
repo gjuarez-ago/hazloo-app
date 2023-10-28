@@ -23,7 +23,6 @@ import lombok.Data;
 @Table(name = "tbl_log")
 public class Log implements Serializable {
 	
-	
 	private static final long serialVersionUID = 1L;
 	
 	@Id

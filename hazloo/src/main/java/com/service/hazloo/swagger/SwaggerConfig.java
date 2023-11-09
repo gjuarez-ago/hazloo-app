@@ -24,7 +24,7 @@ public class SwaggerConfig {
 
 	    private ApiInfo apiInfo(){
 	        return new ApiInfo(
-	                "Spring Boot Blog REST APIs",
+	                "Spring Boot HAZLOO REST APIs",
 	                "Spring Boot Blog REST API Documentation",
 	                "1",
 	                "Terms of service",

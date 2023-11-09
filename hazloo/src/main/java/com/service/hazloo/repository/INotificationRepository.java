@@ -11,6 +11,9 @@ import com.service.hazloo.domain.Notification;
 public interface INotificationRepository extends JpaRepository<Notification, Long>{
     
     @Query(value = "SELECT * FROM tbl_notificaciones WHERE id = :id",nativeQuery = true)
-	List<Notification> getNotificationById(@Param("id") Long plnId); 
+	Notification getNotificationById(@Param("id") Long id); 
+
+    @Query(value = "SELECT * FROM tbl_notificaciones WHERE user_id = :user AND status = :status",nativeQuery = true)
+	List<Notification> getNotificationByUserAndStatus(@Param("user") Long user,@Param("status") Integer status); 
 
 }

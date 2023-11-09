@@ -37,11 +37,14 @@ public class Notification implements Serializable {
 
 	private String type;
 
+	private Integer status;
+
     @ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private User user;
 
     @ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private Task task;
+
 
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Date regDateCreated;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.service.hazloo.domain.Notification;
+import com.service.hazloo.expcetion.GenericException;
 
 @Service
 public interface INotificationService {
@@ -13,6 +14,6 @@ public interface INotificationService {
 
     List<Notification> getNotificationsByUserNotRead(Long userId);
 
-    Notification geNotificationById(Long id);
+    Notification geNotificationById(Long id) throws GenericException;
     
 }

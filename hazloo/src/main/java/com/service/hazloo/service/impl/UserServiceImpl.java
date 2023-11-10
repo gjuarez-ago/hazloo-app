@@ -56,6 +56,13 @@ public class UserServiceImpl implements IUserService{
 	}
 
 
+	@Override
+	public User resetPassword(String username) throws Exception {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'resetPassword'");
+	}
+
+
 
 		
 }

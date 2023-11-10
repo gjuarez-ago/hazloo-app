@@ -58,6 +58,12 @@ public class GlobalExceptionHandler implements ErrorController {
         return createHttpResponse(BAD_REQUEST, INCORRECT_CREDENTIALS, "X012");
     }
 
+    
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<HttpResponse> genericException(GenericException exception) {
+        return createHttpResponse(BAD_REQUEST,exception.getMessage(), "X013");
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<HttpResponse> accessDeniedException() {
         return createHttpResponse(FORBIDDEN, NOT_ENOUGH_PERMISSION, "X011");

@@ -10,4 +10,6 @@ public interface IUserService {
 	
 	User register(RegisterDTO user) throws Exception;
 
+	User resetPassword(String username) throws Exception;
+
 }

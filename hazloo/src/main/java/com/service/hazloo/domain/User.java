@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Entity
@@ -33,6 +35,7 @@ public class User implements Serializable {
 	
 	private String username;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;	
 	
 	@ManyToMany(targetEntity = Role.class,cascade = CascadeType.ALL)

@@ -11,17 +11,17 @@ public class TaskFilterDTO {
 
     private String title;
 
-    private String status;
+    private boolean status;
 
-    private Long project;
+    private Long category;
 
     private Long user;
 
-    public TaskFilterDTO(String title, String status, Long project, Long user) {
+    public TaskFilterDTO(String title, boolean status, Long category, Long user) {
         super();
         this.title = title;
         this.status = status;
-        this.project = project;
+        this.category = category;
         this.user = user;
     }    
 

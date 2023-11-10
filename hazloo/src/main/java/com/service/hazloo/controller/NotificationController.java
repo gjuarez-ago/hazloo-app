@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.service.hazloo.domain.Log;
 import com.service.hazloo.domain.Notification;
 import com.service.hazloo.expcetion.GenericException;
 import com.service.hazloo.service.INotificationService;

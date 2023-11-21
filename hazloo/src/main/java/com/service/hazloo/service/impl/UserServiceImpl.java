@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.service.hazloo.domain.Role;
 import com.service.hazloo.domain.User;
 import com.service.hazloo.dto.RegisterDTO;
+import com.service.hazloo.dto.ResetPasswordDTO;
 import com.service.hazloo.repository.IRoleRepository;
 import com.service.hazloo.repository.IUserRepository;
 import com.service.hazloo.service.IUserService;
@@ -57,9 +58,15 @@ public class UserServiceImpl implements IUserService{
 
 
 	@Override
-	public User resetPassword(String username) throws Exception {
-		// TODO Auto-generated method stub
+	public User resetPassword(ResetPasswordDTO username) throws Exception {
 		throw new UnsupportedOperationException("Unimplemented method 'resetPassword'");
+	}
+
+
+	@Override
+	public User recoveryPassword(String username) throws Exception {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'recoveryPassword'");
 	}
 
 

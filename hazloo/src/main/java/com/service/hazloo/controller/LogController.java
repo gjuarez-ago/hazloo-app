@@ -26,8 +26,8 @@ public class LogController{
     private ILogService service;
 
     @ApiOperation(value = "Endpoint for get log by user")
-	@GetMapping("/log-by-user/{id}") 
-    public ResponseEntity<List<Log>> getLogByUser(@PathVariable("id") Long userId) {
+	@GetMapping("/log-by-user/{user}") 
+    public ResponseEntity<List<Log>> getLogByUser(@PathVariable("user") Long userId) {
         List<Log> res = service.getLogByUser(userId);
 		return new ResponseEntity<>(res, HttpStatus.OK);
     }

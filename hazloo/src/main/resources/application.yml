@@ -13,7 +13,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:sqlserver://187.188.105.90:1477;databaseName=testDB #change this to your database url
+    url: jdbc:sqlserver://187.188.105.90:1477;databaseName=HazlooDB #change this to your database url
     password: Ago0102!* #change this to your database password 
     username: UserLuisF #change this to your database username
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

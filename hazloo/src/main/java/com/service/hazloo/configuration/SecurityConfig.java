@@ -23,8 +23,9 @@ import com.service.hazloo.security.JwtAuthenticationFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
 	
+   public final String[] PUBLIC_URLS = { "**" };
+
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 	
@@ -42,7 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {		
+	protected void configure(HttpSecurity http) throws Exception {	
+      
+
+
 		http
         .csrf().disable()
         .exceptionHandling()
@@ -52,15 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/api/task/**").permitAll()
-        .antMatchers("/api/log/**").permitAll()
-        .antMatchers("/api/notification/**").permitAll()
-        .antMatchers("/api/auth/**").permitAll()
-        .antMatchers("/v2/api-docs/**").permitAll()
-        .antMatchers("/swagger-ui.html/**").permitAll()
-        .antMatchers("/swagger-ui/**").permitAll()
-        .antMatchers("/swagger-resources/**").permitAll()
-        .antMatchers("/webjars/**").permitAll()
+        .antMatchers(PUBLIC_URLS).permitAll()
         .anyRequest()
         .authenticated();
 http.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);

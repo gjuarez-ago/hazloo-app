@@ -135,7 +135,7 @@ class TaskService {
   }
 
   Future<TaskResponse> updateTask(int id, TaskParams request) async {
-    var uri = Uri.http(host, 'planogram/category/edit/$id');
+    var uri = Uri.http(host, 'api/task/update-task/$id');
 
     final http.Response response = await http.post(
       uri,

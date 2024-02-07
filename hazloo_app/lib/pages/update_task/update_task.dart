@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hazloo_app/models/params/task_params.dart';
 import 'package:hazloo_app/models/response/task_response.dart';
 import 'package:hazloo_app/utils/responsive.dart';
 import 'package:hazloo_app/widgets/generic_pages.dart';
@@ -78,9 +79,7 @@ class _UpdateTaskState extends State<UpdateTask> {
           listener: ((context, state) {
             if (state is ErrorTaskById) {
               message(state.messageError!, Colors.red);
-            }
-
-            
+            }            
 
             if (state is SuccessTaskById) {
               setState(() {
@@ -91,6 +90,17 @@ class _UpdateTaskState extends State<UpdateTask> {
                 selectedValueCategory = state.response!.category.toString();
               });
             }
+
+            if (state is SuccessUpdateTask) {
+              message("¡Tarea actualizada correctamente!", Colors.green); 
+              Navigator.pop(context);
+            }
+
+            if (state is ErrorUpdateTask) {
+              message(state.messageError!, Colors.red); 
+            }
+
+
           }),
           builder: (context, state) {
             if (state is ErrorTaskById) {
@@ -101,7 +111,11 @@ class _UpdateTaskState extends State<UpdateTask> {
               return loadingWidget;
             }
 
-            if (state is SuccessTaskById) {
+            if(state is IsLoadingUpdateTask) {
+              return loadingWidget;
+            }
+
+            if (state is SuccessTaskById || state is ErrorUpdateTask) {
               return GestureDetector(
                 onTap: () {
                   FocusScope.of(context).unfocus();
@@ -355,10 +369,16 @@ class _UpdateTaskState extends State<UpdateTask> {
   }
 
   void saveTask() {
-    if (descriptionText == '' && titleText == '') {
-      message("Es necesario llenar todos los campos!", Colors.amber[700]);
+    if (descriptionText.value.text == '' || titleText.value.text == '') {
+      message("¡Es necesario llenar todos los campos!", Colors.amber[700]);
       return;
     }
+
+    print(descriptionText.value.text);
+    print(titleText.value.text);
+
+    TaskParams request = TaskParams(title: titleText.value.text, description: descriptionText.value.text, category: selectedValueCategory, prioridad: selectedValuePriority, user: userId);
+    _taskBloc?.add(EventUpdateTask(taskId: widget.id!, request: request));
   }
 
   Widget getTextField({String? hint}) {

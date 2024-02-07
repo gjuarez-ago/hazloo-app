@@ -54,10 +54,10 @@ class _NewTaskState extends State<NewTask> {
   }
 
 
-  void savaTask() {
+  void saveTask() {
 
-    if (descriptionText == '' && goalText == '') {
-      message("Es necesario llenar todos los campos!", Colors.amber[700]);
+    if (descriptionText == '' || goalText == '') {
+      message("¡Es necesario llenar todos los campos!", Colors.amber[700]);
       return;
     }
 
@@ -321,7 +321,7 @@ class _NewTaskState extends State<NewTask> {
                                 fontSize: responsive.dp(1.8),
                               ),
                             ),
-                            onPressed: savaTask,
+                            onPressed: saveTask,
                             color: Color.fromARGB(255, 3, 63, 112),
                           ),
                         ),

@@ -14,5 +14,7 @@ public interface IUserService {
 	User resetPassword(ResetPasswordDTO username) throws Exception;
 
 	User recoveryPassword(String username) throws Exception;
+	
+	User getUserByUSername(String username);
 
 }

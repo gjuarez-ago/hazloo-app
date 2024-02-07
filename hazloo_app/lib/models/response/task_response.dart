@@ -4,7 +4,6 @@ class TaskResponse {
     required this.title,
     required this.description,
     required this.category,
-    required this.labels,
     required this.prioridad,
     required this.status,
     required this.user,
@@ -13,7 +12,6 @@ class TaskResponse {
   late final String title;
   late final String description;
   late final int category;
-  late final List<String> labels;
   late final int prioridad;
   late final bool status;
   late final User user;
@@ -23,7 +21,6 @@ class TaskResponse {
     title = json['title'];
     description = json['description'];
     category = json['category'];
-    labels = List.castFrom<dynamic, String>(json['labels']);
     prioridad = json['prioridad'];
     status = json['status'];
     user = User.fromJson(json['user']);
@@ -35,7 +32,6 @@ class TaskResponse {
     _data['title'] = title;
     _data['description'] = description;
     _data['category'] = category;
-    _data['labels'] = labels;
     _data['prioridad'] = prioridad;
     _data['status'] = status;
     _data['user'] = user.toJson();
@@ -45,33 +41,61 @@ class TaskResponse {
 
 class User {
   User({
-    required this.id,
     required this.names,
-    required this.surnames,
     required this.username,
-    required this.roles,
+    required this.gender,
+     this.dateOfBirth,
+    required this.role,
+    required this.profileImageUrl,
+    required this.joinDate,
+    required this.authorities,
+    required this.lastLoginDate,
+    required this.lastLoginDateDisplay,
+    required this.active,
+    required this.notLocked,
   });
-  late final int id;
   late final String names;
-  late final String surnames;
   late final String username;
-  late final List<dynamic> roles;
+  late final bool gender;
+  late final Null dateOfBirth;
+  late final String role;
+  late final String profileImageUrl;
+  late final int joinDate;
+  late final List<String> authorities;
+  late final int lastLoginDate;
+  late final int lastLoginDateDisplay;
+  late final bool active;
+  late final bool notLocked;
   
   User.fromJson(Map<String, dynamic> json){
-    id = json['id'];
     names = json['names'];
-    surnames = json['surnames'];
     username = json['username'];
-    roles = List.castFrom<dynamic, dynamic>(json['roles']);
+    gender = json['gender'];
+    dateOfBirth = null;
+    role = json['role'];
+    profileImageUrl = json['profileImageUrl'];
+    joinDate = json['joinDate'];
+    authorities = List.castFrom<dynamic, String>(json['authorities']);
+    lastLoginDate = json['lastLoginDate'];
+    lastLoginDateDisplay = json['lastLoginDateDisplay'];
+    active = json['active'];
+    notLocked = json['notLocked'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['id'] = id;
     _data['names'] = names;
-    _data['surnames'] = surnames;
     _data['username'] = username;
-    _data['roles'] = roles;
+    _data['gender'] = gender;
+    _data['dateOfBirth'] = dateOfBirth;
+    _data['role'] = role;
+    _data['profileImageUrl'] = profileImageUrl;
+    _data['joinDate'] = joinDate;
+    _data['authorities'] = authorities;
+    _data['lastLoginDate'] = lastLoginDate;
+    _data['lastLoginDateDisplay'] = lastLoginDateDisplay;
+    _data['active'] = active;
+    _data['notLocked'] = notLocked;
     return _data;
   }
 }

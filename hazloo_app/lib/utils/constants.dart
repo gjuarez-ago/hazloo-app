@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class Constants {
@@ -10,7 +12,7 @@ class Constants {
   // static const String apiUrl_PRD = 'portal.macropay.mx';
 
   static const Map<String, String> headersPublic = {
-    "Content-Type": "application/json"
+    HttpHeaders.contentTypeHeader: "application/json"
   };
 
   static const Map<String, String> headersProtect = {

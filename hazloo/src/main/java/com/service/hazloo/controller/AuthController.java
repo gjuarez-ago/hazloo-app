@@ -1,5 +1,8 @@
 package com.service.hazloo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,15 +44,20 @@ public class AuthController {
 	
 	@ApiOperation(value = "Endpoint for signin")
 	@PostMapping("/signin")
-	public ResponseEntity<JwtAuthResponse> createComment(@RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<Map<String,Object>> createComment(@RequestBody LoginDTO loginDTO) {
 		
 		Authentication authentication =  authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		// Get token
 		String token = jwtProvider.generateToken(authentication);
-	
-		return new ResponseEntity<>(new JwtAuthResponse(token), HttpStatus.CREATED);
+
+		User user = userService.getUserByUSername(loginDTO.getUsername());
+		Map<String,Object> response = new HashMap<>();
+		response.put("user", user);
+		response.put("token", token);
+
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "Endpoint for register user")

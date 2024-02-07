@@ -1,9 +1,6 @@
-import 'package:hazloo_app/models/params/task_get_params.dart';
 import 'package:hazloo_app/models/params/task_params.dart';
 import 'package:hazloo_app/models/response/task_response.dart';
 import 'package:hazloo_app/services/task_service.dart';
-
-import '../models/response/example_response.dart';
 
 class TaskRepository {
  
@@ -18,9 +15,9 @@ class TaskRepository {
   Future<TaskResponse> getTaskById({required int id}) =>
       service.getTaskById(id);
 
-  Future<List<ResponseExample>> getTaskByUser(
-          {required int request}) =>
-      service.getTaskByUser(request);
+  Future<List<TaskResponse>> getTaskByUser(
+          {required int userId, required String title}) =>
+      service.getTaskByUser(userId, title);
 
   Future<TaskResponse> updateTask(
           {required int id, required TaskParams request}) =>

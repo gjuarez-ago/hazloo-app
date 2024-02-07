@@ -77,25 +77,10 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   ),
                   const SizedBox(height: 24),
                   buildMenuItem(
-                    text: 'Busqueda avanzada',
-                    icon: Icons.search,
-                    color: const Color.fromARGB(248, 239, 200, 192),
-                    onClicked: () => selectedItem(context, 2),
-                  ),
-                  const SizedBox(height: 24),
-                  buildMenuItem(
                     text: 'Consejos',
                     icon: Icons.card_giftcard,
                     color: const Color.fromARGB(248, 247, 244, 186),
-                    onClicked: () => selectedItem(context, 3),
-                  ),
-
-                  const SizedBox(height: 24),
-                  buildMenuItem(
-                    text: 'Historial',
-                    icon: Icons.history,
-                    color: const Color.fromARGB(248, 247, 244, 186),
-                    onClicked: () => selectedItem(context, 4),
+                    onClicked: () => selectedItem(context, 2),
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
@@ -112,7 +97,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     onClicked: () => selectedItem(context, 6),
                   ),
                   const SizedBox(height: 14),
-                  const Divider(color: Color.fromARGB(248, 0, 0, 0)),
+                  const Divider(color: Colors.black, height: 3,),
                   const SizedBox(height: 14),
                   buildMenuItem(
                     text: 'Ayuda',
@@ -184,8 +169,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               const CircleAvatar(
                 radius: 24,
                 backgroundColor: Color.fromARGB(223, 7, 43, 96),
-                child: Icon(Icons.add_comment_outlined,
-                    color: Colors.white),
+                child: Icon(Icons.add_comment_outlined, color: Colors.white),
               )
             ],
           ),

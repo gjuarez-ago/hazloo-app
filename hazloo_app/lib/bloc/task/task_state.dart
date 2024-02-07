@@ -7,7 +7,7 @@ abstract class TaskState {
  
   final String? messageError;
   final TaskResponse? response;
-  final List<ResponseExample>? listResponse;
+  final List<TaskResponse>? listResponse;
   
 
   const TaskState({
@@ -71,7 +71,7 @@ class ErrorListTask extends TaskState {
 }
 
 class SuccessListTask extends TaskState {
-  const SuccessListTask(List<ResponseExample> listResponse)
+  const SuccessListTask(List<TaskResponse> listResponse)
       : super(listResponse: listResponse);
 }
 

@@ -36,8 +36,6 @@ public class Task implements Serializable {
 
     private Long category;
 
-    private String[] labels;
-
     private Long prioridad;
 
 	private boolean status;
@@ -60,8 +58,5 @@ public class Task implements Serializable {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(columnDefinition = "integer default 0")
 	private int regBorrado;
-	
-
-
 
 }

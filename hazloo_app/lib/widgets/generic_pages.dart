@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hazloo_app/utils/constants.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 
 Widget emptyWidget = Stack(
   children: [
@@ -22,7 +24,7 @@ Widget emptyWidget = Stack(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
           Text(
-            'Sin solicitudes',
+            'Sin tareas',
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 30,
@@ -32,7 +34,7 @@ Widget emptyWidget = Stack(
                 fontWeight: FontWeight.bold),
           ),
           Text(
-            'No hay solicitudes pendientes por pagar.',
+            'No hemos encontrado tareas pendientes por completar.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
@@ -134,3 +136,38 @@ Widget comingSoonWidget = Stack(
     )
   ],
 );
+
+
+Widget loadingWidget = WillPopScope(
+            child: Container(
+              color: Color.fromARGB(255, 3, 63, 112),
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Container(
+                    color: Constants.blueGeneric,
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Lottie.asset(
+                        'assets/images/loading.json',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 200, left: 100, right: 100),
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Image.asset(
+                        'assets/images/hazloo_logo_b.png',
+                        // color: Colors.white30,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            onWillPop: () async => false,
+          );

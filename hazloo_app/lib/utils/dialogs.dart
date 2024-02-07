@@ -125,7 +125,6 @@ abstract class ProgressDialog {
 
   static dissmiss(BuildContext context) {
     Navigator.pop(context);
-    Navigator.pop(context);
   }
 
   static dissmiss1(BuildContext context) {

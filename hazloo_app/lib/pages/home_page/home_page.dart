@@ -6,12 +6,16 @@ import 'package:hazloo_app/bloc/bloc.dart';
 import 'package:hazloo_app/models/params/task_get_params.dart';
 import 'package:hazloo_app/models/response/example_response.dart';
 import 'package:hazloo_app/models/response/task_response.dart';
+import 'package:hazloo_app/pages/log_page.dart/log_page.dart';
+import 'package:hazloo_app/pages/new_task/new_task.dart';
 import 'package:hazloo_app/pages/notification_page/notification_page.dart';
+import 'package:hazloo_app/pages/update_task/update_task.dart';
 import 'package:hazloo_app/utils/dialogs.dart';
 import 'package:hazloo_app/widgets/generic_pages.dart';
 import 'package:hazloo_app/widgets/navigation_drawer.dart';
 // import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:confetti/confetti.dart';
+import 'package:hazloo_app/widgets/snackbars.dart';
 import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,8 +31,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TaskBloc? _taskBloc;
-  List<ResponseExample> listRequest = [];
-  List<ResponseExample> listRequestTemp = [];
+  List<TaskResponse> listRequest = [];
+  List<TaskResponse> listRequestTemp = [];
   int userId = 0;
   late TaskGetParams params;
 
@@ -55,6 +59,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
+    userId = 1;
     _controllerCenter =
         ConfettiController(duration: const Duration(seconds: 10));
     _controllerCenterRight =
@@ -66,8 +72,8 @@ class _HomePageState extends State<HomePage> {
     _controllerBottomCenter =
         ConfettiController(duration: const Duration(seconds: 10));
     _taskBloc = BlocProvider.of<TaskBloc>(context);
-    _taskBloc?.add(const EventGetTaskByParams(userId: 1));
-    initialData();
+    _taskBloc?.add(EventGetTaskByParams(userId: userId, title: ''));
+    // initialData();
 
     super.initState();
   }
@@ -114,16 +120,23 @@ class _HomePageState extends State<HomePage> {
     });
 
     if (_selectedIndex == 0) {
-      setState(() {
-        _selectedIndex = 1;
-      });
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const NotificationPage()));
     }
 
     if (_selectedIndex == 1) {
-      _controllerCenter.play();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const NewTask()));
     }
+
+    if (_selectedIndex == 2) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LogPage()));
+    }
+
+    setState(() {
+      _selectedIndex = 1;
+    });
   }
 
   @override
@@ -135,8 +148,9 @@ class _HomePageState extends State<HomePage> {
         strokeWidth: 3,
         triggerMode: RefreshIndicatorTriggerMode.onEdge,
         onRefresh: () async {
+          searchText.text = '';
           // TaskGetParams? params = TaskGetParams(project: '', title: '', user: userId);
-          _taskBloc?.add(EventGetTaskByParams(userId: 1));
+          _taskBloc?.add(EventGetTaskByParams(userId:userId, title: ''));
         },
         child: Scaffold(
             appBar: AppBar(
@@ -168,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Stack(
                       children: <Widget>[
-                        const Icon(Icons.add_box),
+                        const Icon(Icons.person_pin),
                         Positioned(
                           right: 0,
                           child: Container(
@@ -206,25 +220,62 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             body: BlocConsumer<TaskBloc, TaskState>(listener: (context, state) {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+              if (state is SuccessCreateTask) {
+  message( "¡Tarea creada correctamente! 😀",
+                const Color.fromARGB(255, 49, 193, 17));
+          _taskBloc?.add(const EventGetTaskByParams(userId: 1, title: ''));
+
+                // snackbarRoundInfo("", Colors.green);
+              }
+
+                 if(state is ErrorDeleteteTask) {
+                  message(state.messageError!, Colors.red);
+              }
+
+              if(state is IsLoadingDeleteTask) {
+                print("LOADING......................");
+
+              }
+              
+              if(state is SuccessDeleteTask) {
+                message("¡Tarea eliminada correctamente! 😀", Colors.green);
+                    _controllerCenter.play();
+                                                          _taskBloc?.add(const EventGetTaskByParams(userId: 1, title: ''));
+
+
+                                 
+
+              }
+
 
               if (state is IsLoadingListTask) {
-                ProgressDialog.show(context);
+                // ProgressDialog.show(context);
                 // showGeneralLoading(context);
               } else if (state is SuccessListTask) {
-                ProgressDialog.dissmiss1(context);
+                // ProgressDialog.dissmiss1(context);
                 setState(() {
                   listRequest = state.listResponse!;
                   listRequestTemp = state.listResponse!;
                 });
+
+                   Timer(const Duration(seconds: 5), () {
+                                      _controllerCenter.stop();
+                                    });
               }
+
               if (state is ErrorListTask) {
-                ProgressDialog.dissmiss1(context);
-                print(state.messageError);
-                print(listRequest);
+                                  message(state.messageError!, Colors.red);
+                // ProgressDialog.dissmiss1(context);
                 // snackbarError(context, state.messageError!);
               }
             }, builder: (context, state) {
+             
+              if (state is IsLoadingListTask) {
+                return loadingWidget;
+              }
+
+
               if (state is ErrorListTask) {
                 return errorWidget;
               }
@@ -291,52 +342,6 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                   ),
-                                  // const SizedBox(height: 40),
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     const Text(
-                                  //       "Total acumulado: ",
-                                  //       style: TextStyle(
-                                  //         fontSize: 16,
-                                  //         fontWeight: FontWeight.w700,
-                                  //         color: Color.fromARGB(255, 0, 0, 0),
-                                  //       ),
-                                  //     ),
-                                  //     Text(
-                                  //       "\$${getAmountTotal()} MXN",
-                                  //       style: const TextStyle(
-                                  //         fontSize: 16,
-                                  //         // fontWeight: FontWeight.w700,
-                                  //         color: Color.fromARGB(255, 0, 7, 19),
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  // Row(
-                                  //   mainAxisAlignment:
-                                  //       MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     const Text(
-                                  //       "Total a pagar: ",
-                                  //       style: TextStyle(
-                                  //         fontSize: 19,
-                                  //         fontWeight: FontWeight.w700,
-                                  //         color:
-                                  //             Color.fromARGB(255, 242, 242, 242),
-                                  //       ),
-                                  //     ),
-                                  //     Text(
-                                  //       "\$${getAmountSelected()} MXN",
-                                  //       style: const TextStyle(
-                                  //         fontSize: 19,
-                                  //         color:
-                                  //             Color.fromARGB(255, 242, 242, 242),
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // )
                                   Container(
                                     padding: const EdgeInsets.only(
                                         left: 20.0,
@@ -345,9 +350,10 @@ class _HomePageState extends State<HomePage> {
                                         top: 15.0),
                                     child: TextField(
                                       onSubmitted: (String value) {
-                                        // _paymentBloc?.add(
-                                        //     GetRequestEvent(idRequestA: value));
+                                        _taskBloc?.add(
+                                            EventGetTaskByParams(userId: userId, title: value));
                                       },
+                                      controller: searchText,
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           border: OutlineInputBorder(
@@ -385,7 +391,7 @@ class _HomePageState extends State<HomePage> {
                           child: ListView.builder(
                               itemCount: listRequest.length,
                               itemBuilder: (context, index) {
-                                // final item = listRequest[index];
+                                final item = listRequest[index];
 
                                 return Dismissible(
                                   key: UniqueKey(),
@@ -396,15 +402,10 @@ class _HomePageState extends State<HomePage> {
                                   // Remove this product from the list
                                   // In production enviroment, you may want to send some request to delete it on server side
                                   onDismissed: (_) {
-                                    _controllerCenter.play();
-
-                                    Timer(Duration(seconds: 1), () {
-                                      setState(() {
+                                    deleteTaskById(item.id);
+                                    
+                                    setState(() {
                                         listRequest.removeAt(index);
-                                        print("Remove al");
-                                      });
-
-                                      _controllerCenter.stop();
                                     });
                                   },
 
@@ -414,7 +415,7 @@ class _HomePageState extends State<HomePage> {
                                     color: Colors.red,
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 15),
-                                    alignment: Alignment.centerRight,
+                                    // alignment: Alignment.centerRight,
                                     child: const Icon(
                                       Icons.delete,
                                       color: Colors.white,
@@ -427,7 +428,6 @@ class _HomePageState extends State<HomePage> {
                                       child: Column(
                                         children: [
                                           Container(
-                                            alignment: Alignment.center,
                                             child: ConfettiWidget(
                                               confettiController:
                                                   _controllerCenter,
@@ -466,17 +466,11 @@ class _HomePageState extends State<HomePage> {
                                                 ),
                                               ),
                                             ),
-                                            title:
-                                                Text("Correr 10 veces al día"),
-                                            subtitle: Column(
-                                              children: [
-                                                Text(
-                                                    "Me gustaria correr mas veces al día, debido a que me vuelto mas sedentario."),
-                                              ],
-                                            ),
+                                            title: Text("${item.title}  - ${item.id} "),
+                                            subtitle: Text(item.description),
                                             trailing: Icon(
                                                 Icons.tag_faces_rounded,
-                                                color: listRequest[index].id! %
+                                                color: listRequest[index].id %
                                                             2 ==
                                                         1
                                                     ? Colors.amber
@@ -491,9 +485,8 @@ class _HomePageState extends State<HomePage> {
                                                 const Color.fromARGB(
                                                     255, 192, 230, 255),
                                             onTap: () {
-                                              setState(() {
-                                                // item.selected = !item.selected;
-                                              });
+                                                Navigator.push(
+          context, MaterialPageRoute(builder: (context) =>  UpdateTask(id: item.id)));
                                             },
                                             onLongPress: () {
                                               // Navigator.of(context).push(
@@ -516,7 +509,7 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
-              return Text("");
+              return loadingWidget;
             })));
   }
 
@@ -552,89 +545,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String convertToHTTPS(String url) {
-    if (url.indexOf("http://") == 0) {
-      return url.replaceAll("http://", "https://");
-    } else {
-      return url;
-    }
+  void deleteTaskById(int id) {
+    _taskBloc?.add(EventDeleteTaskById(taskId: id));
   }
 
-  double getAmountTotal() {
-    var sum = 0.0;
+  message(String title, Color? color) {
+    var snackbar = SnackBar(
+      backgroundColor: color,
+      content: Text(title),
+      duration: Duration(seconds: 4),
+    );
 
-    // for (var element in listRequest) {
-    //   sum += element.request.amount;
-    // }
-
-    return sum;
-  }
-
-  int getAmountSelected() {
-    // var listFiltered = listRequest.where((x) => x.selected == true);
-
-    var sum = 1;
-
-    // for (var element in listFiltered) {
-    //   sum += element.request.amount;
-    // }
-
-    return sum;
-  }
-
-  void selecttAllRequest() {
-    for (var element in listRequest) {
-      setState(() {
-        // element.selected = !element.selected;
-      });
-    }
-  }
-
-  void paymentMasive() {
-    // var listFiltered = listRequest.where((x) => x.selected == true);
-
-    // if (listFiltered.isEmpty) {
-    //   snackbarError(context, "Es necesario seleccionar minimo un pago");
-    //   return;
-    // }
-
-    List<Object> data = [];
-
-    String currentDate = DateTime.now().millisecondsSinceEpoch.toString();
-
-    // for (var f in listFiltered) {
-    //   ChildCountNo element = ChildCountNo(
-    //       amount: f.request.amount,
-    //       beneficiaryAccountNo: f.user.clabe,
-    //       idRequest: f.request.idRequest,
-    //       instrId: currentDate,
-    //       nmBeneficiary: "${f.user.firstName} ${f.user.lastName}",
-    //       postingDate: DateTime.now().toString(),
-    //       vendorNo: f.user.supplierNumber);
-
-    //   data.add(element);
-    // }
-
-    // PaymentMasive params = PaymentMasive(
-    //     childCountNo: data,
-    //     credTtm: "",
-    //     mesgTxt: currentDate,
-    //     remitTorAccountNo: "",
-    //     serviceProviderId: "");
-
-    // modalButtonsPayment(
-    //   context,
-    //   "Pago HSBC",
-    //   '¿Seguro que deseas realizar la dispersión?',
-    //   "Pagar",
-    //   () => payment(params),
-    //   Icons.monetization_on,
-    // );
-  }
-
-  void payment(Object request) {
-    // _paymentBloc?.add(PaymentMasiveEvent(request: request));
-    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 
   void searhRequest(String value) {

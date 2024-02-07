@@ -58,8 +58,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       yield IsLoadingListTask();
 
       try {
-        List<ResponseExample> response =
-            await _repository.getTaskByUser(request: event.userId!);
+        List<TaskResponse> response =
+            await _repository.getTaskByUser(userId: event.userId!, title: event.title!);
 
         yield SuccessListTask(response );
       } catch (e) {
@@ -77,6 +77,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         yield SuccessTaskById(response:response );
       } catch (e) {
         yield ErrorTaskById(messageError: e.toString());
+      }
+    }
+
+    
+      if (event is EventDeleteTaskById) {
+      yield IsLoadingDeleteTask();
+
+      try {
+        TaskResponse response =
+            await _repository.deleteTaskById(id: event.taskId!);
+
+        yield SuccessDeleteTask(response:response );
+      } catch (e) {
+        yield ErrorDeleteteTask(messageError: e.toString());
       }
     }
   }

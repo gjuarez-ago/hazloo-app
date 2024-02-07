@@ -54,7 +54,6 @@ public class TaskServiceImpl implements ITaskService{
         task.setTitle(request.getTitle());
         task.setCategory(request.getCategory());
         task.setDescription(request.getDescription());
-        task.setLabels(request.getLabels());
         task.setPrioridad(request.getPrioridad());
         task.setStatus(false);
         task.setUser(user);
@@ -77,7 +76,6 @@ public class TaskServiceImpl implements ITaskService{
 
         task.setTitle(request.getTitle());
         task.setDescription(request.getDescription());
-        task.setLabels(request.getLabels());
         task.setPrioridad(request.getPrioridad());
         task.setCategory(request.getCategory());
 

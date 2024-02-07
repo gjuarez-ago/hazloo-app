@@ -9,10 +9,11 @@ abstract class TaskEvent {
    final TaskParams? request;
    final TaskGetParams? params;
    final int? userId;
+   final String? title;
 
 
   const TaskEvent(
-      {this.taskId, this.params, this.request, this.userId});
+      {this.taskId, this.params, this.request, this.userId, this.title});
 }
 
 // Evento para desactivar el perfil del usuario
@@ -28,8 +29,8 @@ class EventUpdateTask extends TaskEvent {
 
 // Evento para restablecer la contraseña dentro de la app
 class EventGetTaskByParams extends TaskEvent {
-  const EventGetTaskByParams({required int userId })
-      : super(userId: userId);
+  const EventGetTaskByParams({required int userId, required String title})
+      : super(userId: userId, title: title);
 }
 
 // Evento para restablecer la contraseña dentro de la app

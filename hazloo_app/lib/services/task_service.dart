@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:io';
 import 'package:hazloo_app/models/params/task_params.dart';
 import 'package:hazloo_app/models/response/example_response.dart';
 import 'package:hazloo_app/models/response/task_response.dart';
@@ -24,7 +24,6 @@ class TaskService {
       body: jsonEncode(<String, dynamic>{
         "category": request.category,
         "description": request.description,
-        "labels": request.labels,
         "prioridad": request.prioridad,
         "title": request.title,
         "userId": request.user
@@ -36,7 +35,7 @@ class TaskService {
     }
 
     if (response.statusCode == 400) {
-      return throw ("Ocurrio un error con la consulta");
+      return throw (jsonDecode(response.body)["message"]);
     }
 
     if (response.statusCode == 500) {
@@ -50,7 +49,7 @@ class TaskService {
   Future<TaskResponse> deleteTaskById(int id) async {
     var uri = Uri.http(
       host,
-      '/api/task/delete-task/$id',
+      'api/task/delete-task/$id',
     );
 
     final http.Response response = await http.delete(
@@ -74,34 +73,24 @@ class TaskService {
   }
 
   // * : Buscar información del usuario por username
-  Future<List<ResponseExample>> getTaskByUser(int userId) async {
-    
-    final queryParameters = {
-      'user': userId
+  Future<List<TaskResponse>> getTaskByUser(int userId, String title) async {
+    final Map<String, String> queryParameters = <String, String>{
+      'user': userId.toString(),
+      "title": title
     };
 
-    var uri = Uri.http(host, '/category/list');
+    var uri = Uri.http(host, 'api/task/filters-task-by-user', queryParameters);
 
-    final http.Response response = await http.get(
-      uri,
-      headers: Constants.headersPublic,
-    );
-
-          log(response.body);
-
+    final http.Response response = await http.get(uri, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    });
 
     if (response.statusCode == 200) {
-
-      //     Iterable l = json.decode(response.body);
-
-      // Iterable list = json.decode(response.body);
-      //    List<TaskResponse>     posts = list.map((model) => TaskResponse.fromJson(model)).toList();
-
       List<dynamic> body = jsonDecode(response.body);
 
-      List<ResponseExample> posts = body
+      List<TaskResponse> posts = body
           .map(
-            (dynamic item) => ResponseExample.fromJson(item),
+            (dynamic item) => TaskResponse.fromJson(item),
           )
           .toList();
 
@@ -146,7 +135,7 @@ class TaskService {
   }
 
   Future<TaskResponse> updateTask(int id, TaskParams request) async {
-    var uri = Uri.http(host, '/api/task/update-task/$id');
+    var uri = Uri.http(host, 'planogram/category/edit/$id');
 
     final http.Response response = await http.post(
       uri,
@@ -154,9 +143,9 @@ class TaskService {
       body: jsonEncode(<String, dynamic>{
         "category": request.category,
         "description": request.description,
-        "labels": request.labels,
         "prioridad": request.prioridad,
-        "title": request.title
+        "title": request.title,
+        "userId": request.user
       }),
     );
 
@@ -176,7 +165,7 @@ class TaskService {
   }
 
   Future<TaskResponse> solvedTask(int id) async {
-    var uri = Uri.http(host, '/api/task/update-task/$id');
+    var uri = Uri.http(host, '/api/task/solved-status/$id');
 
     final http.Response response =
         await http.post(uri, headers: Constants.headersPublic);

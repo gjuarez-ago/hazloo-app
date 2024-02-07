@@ -55,6 +55,16 @@ class _LoginPageState extends State<LoginPage> {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
+  
+  message(String title, Color? color) {
+    var snackbar = SnackBar(
+      backgroundColor: color,
+      content: Text(title),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
   @override
   void initState() {
     initialData();
@@ -77,20 +87,15 @@ class _LoginPageState extends State<LoginPage> {
 
         savePref(state.response!.user, state.response!.token);
         Navigator.pushReplacementNamed(context, HomePage.routeName);
-        
-
-
-// Timer(Duration(seconds: 3), () => {
-
-  
-// });
-
-          }
+        // Timer(Duration(seconds: 3), () => {
+        // });
+        }
 
           if (state is ErrorAuth) {
             print(state.messageError);
             ProgressDialog.dissmiss(context);
-            snackbarRoundInfo(context, "${state.messageError}", Colors.red);
+            
+            message(state.messageError!, Colors.red);
           }
         }, builder: (context, state) {
           return GestureDetector(

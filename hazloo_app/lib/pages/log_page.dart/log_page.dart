@@ -8,16 +8,16 @@ import 'package:hazloo_app/widgets/generic_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../bloc/bloc.dart';
 
-class NotificationPage extends StatefulWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+class LogPage extends StatefulWidget {
+  const LogPage({super.key});
 
-  static String routeName = "notification_page";
+  static String routeName = "log_page";
 
   @override
-  State<NotificationPage> createState() => _NotificationPageState();
+  State<LogPage> createState() => _LogPageState();
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _LogPageState extends State<LogPage> {
   TaskBloc? _taskBloc;
   List<TaskResponse> listRequest = [];
   List<TaskResponse> listRequestTemp = [];
@@ -67,7 +67,7 @@ class _NotificationPageState extends State<NotificationPage> {
           iconTheme:
               const IconThemeData(color: Color.fromRGBO(255, 255, 255, 0.973)),
           title: const Text(
-            'Anuncios',
+            'Historial',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
@@ -79,6 +79,8 @@ class _NotificationPageState extends State<NotificationPage> {
         ),
         body: BlocConsumer<TaskBloc, TaskState>(
           listener: (context, state) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
             if (state is IsLoadingListTask) {
             } else if (state is SuccessListTask) {
               setState(() {
@@ -121,7 +123,7 @@ class _NotificationPageState extends State<NotificationPage> {
                               border: new Border(
                                   right: new BorderSide(
                                       width: 1.0, color: Colors.black12))),
-                          child: Icon(Icons.add_alert, color: Colors.black),
+                          child: Icon(Icons.history, color: Colors.black),
                         ),
                         title: Text(
                           "Introduction to Driving",

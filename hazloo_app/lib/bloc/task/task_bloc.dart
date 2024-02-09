@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:hazloo_app/bloc/task/task_event.dart';
 import 'package:hazloo_app/bloc/task/task_state.dart';
-import 'package:hazloo_app/models/response/example_response.dart';
 import 'package:hazloo_app/models/response/task_response.dart';
 import 'package:hazloo_app/repository/task_repository.dart';
 

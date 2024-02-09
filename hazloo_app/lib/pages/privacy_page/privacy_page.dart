@@ -1,18 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:hazloo_app/utils/constants.dart';
 import 'package:hazloo_app/widgets/header_widget.dart';
 
-class AboutPage extends StatefulWidget {
-  const AboutPage({Key? key}) : super(key: key);
-
-  static String routeName = "about_page";
+class PrivacyPage extends StatefulWidget {
+  
+  const PrivacyPage({super.key});
 
   @override
-  State<AboutPage> createState() => _AboutPageState();
+  State<PrivacyPage> createState() => _PrivacyPageState();
 }
 
-class _AboutPageState extends State<AboutPage> {
-  final double _headerHeight = 250;
+class _PrivacyPageState extends State<PrivacyPage> {
+   final double _headerHeight = 250;
 
   @override
   Widget build(BuildContext context) {

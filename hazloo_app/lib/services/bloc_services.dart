@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hazloo_app/bloc/bloc.dart';
 
-import '../bloc/bloc.dart';
 
 List<BlocProvider> blocsServices(String token) {
   return [
@@ -16,8 +16,14 @@ List<BlocProvider> blocsServices(String token) {
     BlocProvider<UserBloc>(
       create: (context) => UserBloc(),
     ),
-     BlocProvider<TaskBloc>(
+    BlocProvider<TaskBloc>(
       create: (context) => TaskBloc(),
+    ),
+    BlocProvider<NotificationBloc>(
+      create: (context) => NotificationBloc(),
+    ),
+    BlocProvider<LogBloc>(
+      create: (context) => LogBloc(),
     ),
   ];
 }

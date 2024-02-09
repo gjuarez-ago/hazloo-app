@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hazloo_app/models/response/example_response.dart';
 import 'package:hazloo_app/models/response/task_response.dart';
 
 @immutable

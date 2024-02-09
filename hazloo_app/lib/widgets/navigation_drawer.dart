@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hazloo_app/pages/about_page/about_page.dart';
+import 'package:hazloo_app/pages/advices_page/advices_page.dart';
+import 'package:hazloo_app/pages/faq_page/faq_page.dart';
 import 'package:hazloo_app/pages/login_page/login_page.dart';
+import 'package:hazloo_app/pages/privacy_page/privacy_page.dart';
 import 'package:hazloo_app/pages/user_profile_page/user_profile_page.dart';
 import 'package:hazloo_app/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +37,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       // initials = getInitials(name!, surname!);
 
       email = "bicosind@gmail.com";
-      name = "Gabriel";
+      name = "Gabri";
       surname = "Juarez";
       initials = "GA";
     });
@@ -87,30 +91,33 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     text: 'Sobre nosotros',
                     icon: Icons.info_outline,
                     color: const Color.fromARGB(248, 141, 207, 215),
-                    onClicked: () => selectedItem(context, 5),
+                    onClicked: () => selectedItem(context, 3),
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
                     text: 'Salir',
                     icon: Icons.exit_to_app,
                     color: const Color.fromARGB(248, 242, 186, 174),
-                    onClicked: () => selectedItem(context, 6),
+                    onClicked: () => selectedItem(context, 4),
                   ),
                   const SizedBox(height: 14),
-                  const Divider(color: Colors.black, height: 3,),
+                  const Divider(
+                    color: Colors.black,
+                    height: 3,
+                  ),
                   const SizedBox(height: 14),
                   buildMenuItem(
                     text: 'Ayuda',
                     icon: Icons.help,
                     color: const Color.fromARGB(248, 190, 236, 204),
-                    onClicked: () => selectedItem(context, 7),
+                    onClicked: () => selectedItem(context, 5),
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
                     text: 'Aviso de privacidad',
                     icon: Icons.policy_outlined,
                     color: const Color.fromARGB(248, 244, 232, 227),
-                    onClicked: () => selectedItem(context, 8),
+                    onClicked: () => selectedItem(context, 6),
                   ),
                 ],
               ),
@@ -130,13 +137,13 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       InkWell(
         onTap: onClicked,
         child: Container(
-          color: Color.fromARGB(255, 3, 16, 134),
+          color: Color.fromARGB(255, 3, 63, 112),
           padding: padding.add(const EdgeInsets.symmetric(vertical: 40)),
           child: Row(
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Color.fromARGB(223, 7, 43, 96),
+                backgroundColor: Color.fromARGB(223, 132, 172, 232),
                 child: Text(
                   initials,
                   style: const TextStyle(color: Colors.white),
@@ -166,11 +173,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 ),
               ),
               const Spacer(),
-              const CircleAvatar(
-                radius: 24,
-                backgroundColor: Color.fromARGB(223, 7, 43, 96),
-                child: Icon(Icons.add_comment_outlined, color: Colors.white),
-              )
+              // const CircleAvatar(
+              //   radius: 24,
+              //   backgroundColor: Color.fromARGB(223, 7, 43, 96),
+              //   child: Icon(Icons.add_comment_outlined, color: Colors.white),
+              // )
             ],
           ),
         ),
@@ -239,47 +246,34 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 
         break;
       case 2:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => const MyLoansPage(),
-        // ));
-
-        // Navigator.of(context).push(_createRoute(const MyLoansPage()));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const AdvicesPages(),
+        ));
 
         break;
 
       case 3:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => const AwardPage(),
-        // ));
-
-        // Navigator.of(context).push(_createRoute(const AwardPage()));
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const AboutPage(),
+        ));
         break;
 
       case 4:
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => const NotificationPage(),
-        // ));
-
-        // Navigator.of(context).push(_createRoute(const NotificationPage()));
-        break;
-
-      case 5:
-        // Navigator.of(context).push(_createRoute(const AboutPage()));
-        break;
-
-      case 6:
         signOut();
         break;
 
-      case 7:
-        // Navigator.of(context).push(_createRoute(const FaqPage()));
+      case 5:
+       Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const FaqPage(),
+        ));        
         break;
 
-      case 8:
-        // Navigator.of(context)
-        // .push(_createRoute(const TermsAndConditionsPage()));
-
+      case 6:
+         Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const PrivacyPage(),
+        ));
         break;
+
     }
   }
 

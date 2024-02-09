@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hazloo_app/pages/about_page/about_page.dart';
+import 'package:hazloo_app/pages/faq_page/faq_page.dart';
+import 'package:hazloo_app/pages/user_profile_page/widgets/change_password.dart';
+import 'package:hazloo_app/pages/user_profile_page/widgets/edit_user.dart';
 import 'package:hazloo_app/utils/constants.dart';
 import 'package:hazloo_app/widgets/header_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +17,7 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+
   String name = "Gabriel";
   String surname = "Juarez de la Cruz";
   String initials = "GA";
@@ -87,12 +92,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
                           //color: Colors.orange,
-                          color: Color.fromARGB(0, 6, 28, 100),
+                          color: Color.fromARGB(255, 3, 63, 112),
                           child: ListTile(
                             onTap: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //   builder: (context) => const EditUserPage(),
-                              // ));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const EditUserPage(),
+                              ));
                             },
                             title: Text(
                               '$name $surname',
@@ -139,10 +144,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 trailing:
                                     const Icon(Icons.keyboard_arrow_right),
                                 onTap: () {
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //   builder: (context) =>
-                                  //       const ChangePasswordPage(),
-                                  // ));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                         ChangePasswordPage(),
+                                  ));
                                 },
                               ),
                               const SizedBox(height: 10.0),
@@ -158,9 +163,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 trailing:
                                     const Icon(Icons.keyboard_arrow_right),
                                 onTap: () {
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //   builder: (context) => const AboutPage(),
-                                  // ));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const AboutPage(),
+                                  ));
                                 },
                               ),
                               const SizedBox(height: 10.0),
@@ -176,9 +181,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                 trailing:
                                     const Icon(Icons.keyboard_arrow_right),
                                 onTap: () {
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //   builder: (context) => const ChangePasswordPage(),
-                                  // ));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const FaqPage(),
+                                  ));
                                 },
                               ),
                               const SizedBox(height: 10.0),
@@ -186,61 +191,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ),
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
-                          "Otros ajustes",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SwitchListTile(
-                          //activeColor: Colors.orange,
-                          activeColor: const Color.fromARGB(255, 48, 49, 51),
-                          contentPadding: const EdgeInsets.all(0),
-                          value: isSwitchedNot,
-                          title: const Text(
-                            "Recibir Notificaciones",
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitchedNot = value;
-                              print(isSwitchedNot);
-                            });
-                          },
-                        ),
-                        SwitchListTile(
-                          activeColor: const Color.fromARGB(255, 48, 49, 51),
-                          contentPadding: const EdgeInsets.all(0),
-                          value: isSwitchedOfe,
-                          title: const Text(
-                            "Recibir Ofertas",
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitchedOfe = value;
-                              print(isSwitchedOfe);
-                            });
-                          },
-                        ),
-                        SwitchListTile(
-                          activeColor: const Color.fromARGB(255, 48, 49, 51),
-                          contentPadding: const EdgeInsets.all(0),
-                          value: dactilar,
-                          title: const Text(
-                            "Activar huella dactilar",
-                          ),
-                          onChanged: (value) async {
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
-
-                            setState(() {
-                              dactilar = value;
-                              preferences.setBool("dactilar", value);
-                              // print(dactilar);
-                            });
-                          },
-                        ),
+                    
+                      
                       ],
                     ),
                   ),

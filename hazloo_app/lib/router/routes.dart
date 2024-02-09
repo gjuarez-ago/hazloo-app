@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:hazloo_app/pages/about_page/about_page.dart';
+import 'package:hazloo_app/pages/advices_page/advices_page.dart';
 import 'package:hazloo_app/pages/faq_page/faq_page.dart';
 import 'package:hazloo_app/pages/home_page/home_page.dart';
 import 'package:hazloo_app/pages/log_page.dart/log_page.dart';
@@ -31,10 +31,11 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     UpdateTask.routeName: (BuildContext context) => const UpdateTask(),
     ResetPasswordPage.routeName: (BuildContext context) =>
         const ResetPasswordPage(),
-   
     SplashPage.routeName: (BuildContext context) => const SplashPage(),
     UserProfilePage.routeName: (BuildContext context) =>
         const UserProfilePage(),
     WelcomePage.routeName: (BuildContext context) => const WelcomePage(),
+    AdvicesPages.routeName: (BuildContext context) => const AdvicesPages(),
+    AboutPage.routeName: (BuildContext context) => const AboutPage(),
   };
 }

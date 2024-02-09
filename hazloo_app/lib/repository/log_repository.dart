@@ -1,4 +1,5 @@
 import 'package:hazloo_app/models/response/log_response.dart';
+import 'package:hazloo_app/models/response/notification_response.dart';
 import 'package:hazloo_app/services/log_service.dart';
 
 class LogRespository {

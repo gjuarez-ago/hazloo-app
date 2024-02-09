@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:hazloo_app/models/response/log_response.dart';
 import 'package:hazloo_app/models/response/notification_response.dart';
@@ -6,26 +5,22 @@ import 'package:hazloo_app/utils/constants.dart';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 
-
-class LogService {
-
- final Logger logger = Logger();
+class NotificationService {
+  final Logger logger = Logger();
   String host = Constants.apiUrl;
 
   // * : Servicio para desabilitar la cuenta del usuario
-  Future<LogResponse> logById(int id) async {
+  Future<NotificationResponse> getNotificationById(int id) async {
     var uri = Uri.https(
       host,
-      'api/log/log-by-id/$id',
+      'api/notification/notifications-by-user/$id',
     );
 
-    final http.Response response = await http.get(
-      uri,
-      headers: Constants.headersPublic
-    );
+    final http.Response response =
+        await http.get(uri, headers: Constants.headersPublic);
 
     if (response.statusCode == 200) {
-      return LogResponse.fromJson(json.decode(response.body));
+      return NotificationResponse.fromJson(json.decode(response.body));
     }
 
     if (response.statusCode == 400) {
@@ -39,12 +34,10 @@ class LogService {
     return throw ("No funciona el servicio por el momento");
   }
 
-
-   // * : Buscar información del usuario por username
-  Future<List<LogResponse>> getLogByUser(int user) async {
-
-    var uri =
-        Uri.https(host, '/api/log/log-by-user/$user');
+  // * : Buscar información del usuario por username
+  Future<List<NotificationResponse>> getNotificationsByUser(int user) async {
+   
+    var uri = Uri.https(host, 'api/notification/ads-by-user-nr/$user');
 
     final http.Response response = await http.get(
       uri,
@@ -53,8 +46,8 @@ class LogService {
 
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
-      List<LogResponse> list = List<LogResponse>.from(
-          l.map((model) => LogResponse.fromJson(model)));
+      List<NotificationResponse> list =
+          List<NotificationResponse>.from(l.map((model) => LogResponse.fromJson(model)));
       return list;
     }
 

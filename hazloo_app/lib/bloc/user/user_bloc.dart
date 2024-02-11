@@ -12,18 +12,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
     // Ver detalle de un pago
-    if (event is EventDesactivateUser) {
-      yield IsLoadingDesactivateProfile();
-
-      try {
-        UserResponse response =
-            await _repository.desactivateUserById(username: event.username!);
-
-        yield SuccessDesactivateProfile(responseDesactivate: response);
-      } catch (e) {
-        yield ErrorDesactivateProfile(messageError: e.toString());
-      }
-    }
+   
 
     // Conseguir información del usuario
     if (event is EventGetUser) {
@@ -33,7 +22,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         UserResponse response =
             await _repository.getInformationUser(username: event.username!);
 
-        yield SuccessGetUsername(responseUserById: response);
+        yield SuccessGetUsername(response: response);
       } catch (e) {
         yield ErrorGetUsername(messageError: e.toString());
       }
@@ -47,24 +36,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         UserResponse response =
             await _repository.updateProfile(params: event.profileParams);
 
-        yield SuccessUpdateProfile(responseUpdateProfile: response);
+        yield SuccessUpdateProfile(response: response);
       } catch (e) {
         yield ErrorUpdateProfile(messageError: e.toString());
       }
     }
 
-    // Restablecer la contraseña dentro del sistema
-    if (event is EventRPInside) {
-      yield IsLoadingRPI();
+      // Actualizar perfil del usuario
+    if (event is EventResetPasword) {
+      yield IsLoadingResetPassword();
 
       try {
-        UserResponse response = await _repository.resetPasswordInside(
-            username: event.username!, password: event.password!);
+        UserResponse response =
+            await _repository.resetPasswordInside(password: event.password!, username: event.username!);
 
-        yield SuccessRPI(responseResetPassword: response);
+        yield SuccessResetPassword(response: response);
       } catch (e) {
-        yield ErrorRPI(messageError: e.toString());
+        yield ErrorUpdateProfile(messageError: e.toString());
       }
     }
+
+    
   }
 }

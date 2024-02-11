@@ -44,9 +44,7 @@ class User {
     required this.names,
     required this.username,
     required this.gender,
-     this.dateOfBirth,
     required this.role,
-    required this.profileImageUrl,
     required this.joinDate,
     required this.authorities,
     required this.lastLoginDate,
@@ -57,9 +55,7 @@ class User {
   late final String names;
   late final String username;
   late final bool gender;
-  late final Null dateOfBirth;
   late final String role;
-  late final String profileImageUrl;
   late final int joinDate;
   late final List<String> authorities;
   late final int lastLoginDate;
@@ -71,9 +67,7 @@ class User {
     names = json['names'];
     username = json['username'];
     gender = json['gender'];
-    dateOfBirth = null;
     role = json['role'];
-    profileImageUrl = json['profileImageUrl'];
     joinDate = json['joinDate'];
     authorities = List.castFrom<dynamic, String>(json['authorities']);
     lastLoginDate = json['lastLoginDate'];
@@ -87,9 +81,7 @@ class User {
     _data['names'] = names;
     _data['username'] = username;
     _data['gender'] = gender;
-    _data['dateOfBirth'] = dateOfBirth;
     _data['role'] = role;
-    _data['profileImageUrl'] = profileImageUrl;
     _data['joinDate'] = joinDate;
     _data['authorities'] = authorities;
     _data['lastLoginDate'] = lastLoginDate;

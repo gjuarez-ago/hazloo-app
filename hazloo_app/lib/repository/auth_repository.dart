@@ -19,7 +19,4 @@ class AuthRepository {
   Future<HttpResponse> recoveryPassword({required String username}) =>
       service.recoveryPassword(username);
 
-  Future<UserResponse> verifyUser(
-          {required String username, required String code}) =>
-      service.resetPassword(username, code);
 }

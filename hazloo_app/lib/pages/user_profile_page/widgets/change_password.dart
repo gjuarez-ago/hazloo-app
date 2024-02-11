@@ -26,19 +26,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
    final Responsive responsive = Responsive.of(context);
 
     return Scaffold(
-      appBar: AppBar(
+     appBar: AppBar(
         centerTitle: true,
-         iconTheme: IconThemeData(color:  Color.fromRGBO(137, 107, 4, 8)),
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
         title: Text(
           'Cambiar contraseña',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w700,
-            color:  Color.fromRGBO(0, 34, 91, 1),
+            color: Color.fromARGB(255, 255, 255, 255),
           ),
         ),
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(255, 3, 63, 112),
       ),
       body: GestureDetector(
             onTap: () {

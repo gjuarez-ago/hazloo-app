@@ -11,11 +11,6 @@ abstract class UserEvent {
       {this.username, this.status, this.password, this.profileParams});
 }
 
-// Evento para desactivar el perfil del usuario
-class EventDesactivateUser extends UserEvent {
-  const EventDesactivateUser({required String username})
-      : super(username: username);
-}
 
 // Evento para buscar un usuario por ID
 class EventGetUser extends UserEvent {
@@ -28,8 +23,9 @@ class EventUpdateProfile extends UserEvent {
       : super(profileParams: profileParams);
 }
 
-// Evento para restablecer la contraseña dentro de la app
-class EventRPInside extends UserEvent {
-  const EventRPInside({required String username, required String password})
-      : super(username: username, password: password);
+
+class EventResetPasword extends UserEvent {
+  const EventResetPasword({required dynamic profileParams})
+      : super(profileParams: profileParams);
 }
+

@@ -14,7 +14,7 @@ class LogService {
 
   // * : Servicio para desabilitar la cuenta del usuario
   Future<LogResponse> logById(int id) async {
-    var uri = Uri.https(
+    var uri = Uri.http(
       host,
       'api/log/log-by-id/$id',
     );
@@ -44,7 +44,7 @@ class LogService {
   Future<List<LogResponse>> getLogByUser(int user) async {
 
     var uri =
-        Uri.https(host, '/api/log/log-by-user/$user');
+        Uri.http(host, '/api/log/log-by-user/$user');
 
     final http.Response response = await http.get(
       uri,

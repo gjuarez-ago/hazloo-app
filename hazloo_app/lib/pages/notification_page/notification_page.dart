@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hazloo_app/models/params/task_get_params.dart';
-import 'package:hazloo_app/models/response/example_response.dart';
-import 'package:hazloo_app/models/response/task_response.dart';
-import 'package:hazloo_app/utils/dialogs.dart';
+import 'package:hazloo_app/models/response/notification_response.dart';
 import 'package:hazloo_app/widgets/generic_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../bloc/bloc.dart';
@@ -18,9 +16,9 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  TaskBloc? _taskBloc;
-  List<TaskResponse> listRequest = [];
-  List<TaskResponse> listRequestTemp = [];
+  NotificationBloc? _notiBloc;
+  List<NotificationResponse> listRequest = [];
+  List<NotificationResponse> listRequestTemp = [];
   int userId = 0;
   late TaskGetParams params;
 
@@ -37,8 +35,8 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   void initState() {
-    _taskBloc = BlocProvider.of<TaskBloc>(context);
-    _taskBloc?.add(const EventGetTaskByParams(userId: 1, title: ''));
+    _notiBloc = BlocProvider.of<NotificationBloc>(context);
+    _notiBloc?.add(const EventNotificationList(userId: 1));
     // initialData();
 
     super.initState();
@@ -59,7 +57,7 @@ class _NotificationPageState extends State<NotificationPage> {
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       onRefresh: () async {
         // TaskGetParams? params = TaskGetParams(project: '', title: '', user: userId);
-        _taskBloc?.add(EventGetTaskByParams(userId: 1, title: ''));
+        _notiBloc?.add(EventNotificationList(userId: 1));
       },
       child: Scaffold(
         appBar: AppBar(
@@ -77,30 +75,30 @@ class _NotificationPageState extends State<NotificationPage> {
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 3, 63, 112),
         ),
-        body: BlocConsumer<TaskBloc, TaskState>(
+        body: BlocConsumer<NotificationBloc, NotificationState>(
           listener: (context, state) {
-            if (state is IsLoadingListTask) {
-            } else if (state is SuccessListTask) {
+            if (state is IsLoadingNotificationList) {
+            } else if (state is SuccessNotificationList) {
               setState(() {
                 listRequest = state.listResponse!;
                 listRequestTemp = state.listResponse!;
               });
             }
-            if (state is ErrorListTask) {
+            if (state is ErrorNotificationList) {
               message(state.messageError!, Colors.red);
               // snackbarError(context, state.messageError!);
             }
           },
           builder: (context, state) {
-            if (state is ErrorListTask) {
+            if (state is ErrorNotificationList) {
               return errorWidget;
             }
 
-            if (state is IsLoadingListTask) {
+            if (state is IsLoadingNotificationList) {
               return loadingWidget;
             }
 
-            if (state is SuccessListTask) {
+            if (state is SuccessNotificationList) {
               if (state.listResponse!.isEmpty) {
                 return emptyWidget;
               }

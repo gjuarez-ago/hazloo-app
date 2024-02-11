@@ -19,23 +19,21 @@ class _AboutPageState extends State<AboutPage> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          padding: const EdgeInsets.only(left: 16, right: 20),
-          alignment: Alignment.center,
-          height: 60.0,
-          width: 150,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/cotta.png'),
-              fit: BoxFit.contain,
-            ),
+    appBar: AppBar(
+        centerTitle: true,
+        iconTheme: const IconThemeData(
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+        title: const Text(
+          'Acerca de nosotros',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: Color.fromARGB(255, 255, 255, 255),
           ),
         ),
-        centerTitle: true,
-        elevation: 0.0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Constants.blueGeneric,
+        elevation: 0,
+        backgroundColor: const Color.fromARGB(255, 3, 63, 112),
       ),
        body: GestureDetector(
         onTap: () {

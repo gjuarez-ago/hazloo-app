@@ -18,49 +18,20 @@ class _FaqPageState extends State<FaqPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "FAQ",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
         centerTitle: true,
-        elevation: 0.0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Constants.blueGeneric,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(
-              top: 16,
-              right: 16,
-            ),
-            child: Stack(
-              children: <Widget>[
-                const Icon(Icons.notifications),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '5',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 255, 255, 255),
+        ),
+        title: Text(
+          'FAQ',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Color.fromARGB(255, 3, 63, 112),
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),

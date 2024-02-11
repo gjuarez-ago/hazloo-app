@@ -5,17 +5,11 @@ import 'package:hazloo_app/models/response/user_response.dart';
 abstract class UserState {
  
   final String? messageError;
-  final UserResponse? responseDesactivate;
-  final UserResponse? responseUserById;
-  final UserResponse? responseUpdateProfile;
-  final UserResponse? responseResetPassword;
+  final UserResponse? response;
 
   const UserState({
     this.messageError,
-    this.responseDesactivate,
-    this.responseUserById,
-    this.responseUpdateProfile,
-    this.responseResetPassword,
+    this.response
   });
 }
 
@@ -30,8 +24,8 @@ class ErrorDesactivateProfile extends UserState {
 }
 
 class SuccessDesactivateProfile extends UserState {
-  const SuccessDesactivateProfile({required UserResponse responseDesactivate})
-      : super(responseDesactivate: responseDesactivate);
+  const SuccessDesactivateProfile({required UserResponse response})
+      : super(response: response);
 }
 
 // Estados para buscar información del usuario por username
@@ -43,8 +37,8 @@ class ErrorGetUsername extends UserState {
 }
 
 class SuccessGetUsername extends UserState {
-  const SuccessGetUsername({required UserResponse responseUserById})
-      : super(responseUserById: responseUserById);
+  const SuccessGetUsername({required UserResponse response})
+      : super(response: response);
 }
 
 // Estados para actualizar el perfil del usuario
@@ -56,19 +50,20 @@ class ErrorUpdateProfile extends UserState {
 }
 
 class SuccessUpdateProfile extends UserState {
-  const SuccessUpdateProfile({required UserResponse responseUpdateProfile})
-      : super(responseUpdateProfile: responseUpdateProfile);
+  const SuccessUpdateProfile({required UserResponse response})
+      : super(response: response);
 }
 
 // Estados para restablecer la contraseña dentro del sistema
-class IsLoadingRPI extends UserState {}
+class IsLoadingResetPassword extends UserState {}
 
-class ErrorRPI extends UserState {
-  const ErrorRPI({required String messageError})
+class ErrorResetPassword extends UserState {
+  const ErrorResetPassword({required String messageError})
       : super(messageError: messageError);
 }
 
-class SuccessRPI extends UserState {
-  const SuccessRPI({required UserResponse responseResetPassword})
-      : super(responseResetPassword: responseResetPassword);
+class SuccessResetPassword extends UserState {
+  const SuccessResetPassword({required UserResponse response})
+      : super(response: response);
 }
+

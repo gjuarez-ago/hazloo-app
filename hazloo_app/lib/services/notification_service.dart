@@ -11,7 +11,7 @@ class NotificationService {
 
   // * : Servicio para desabilitar la cuenta del usuario
   Future<NotificationResponse> getNotificationById(int id) async {
-    var uri = Uri.https(
+    var uri = Uri.http(
       host,
       'api/notification/notifications-by-user/$id',
     );
@@ -37,7 +37,7 @@ class NotificationService {
   // * : Buscar información del usuario por username
   Future<List<NotificationResponse>> getNotificationsByUser(int user) async {
    
-    var uri = Uri.https(host, 'api/notification/ads-by-user-nr/$user');
+    var uri = Uri.http(host, 'api/notification/ads-by-user-nr/$user');
 
     final http.Response response = await http.get(
       uri,

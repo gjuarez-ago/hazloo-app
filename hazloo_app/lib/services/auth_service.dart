@@ -100,31 +100,5 @@ class AuthService {
     return throw ("No funciona el servicio por el momento");
   }
 
-  // ** : Verificar correo de usuario
-  Future<UserResponse> resetPassword(String username, String code) async {
-    var uri = Uri.http(
-      host,
-      '/hazloo/api/auth/reset-password',
-    );
 
-    final http.Response response = await http.post(
-      uri,
-      headers: Constants.headersPublic,
-      body: jsonEncode(<String, dynamic>{"username": code}),
-    );
-
-    if (response.statusCode == 200) {
-      return UserResponse.fromJson(json.decode(response.body));
-    }
-
-    if (response.statusCode == 400) {
-      return throw ("Ocurrio un error con la consulta");
-    }
-
-    if (response.statusCode == 500) {
-      return throw ("Problemas en el servidor");
-    }
-
-    return throw ("No funciona el servicio por el momento");
-  }
 }

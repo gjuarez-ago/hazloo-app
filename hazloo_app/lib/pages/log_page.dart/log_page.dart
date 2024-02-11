@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hazloo_app/models/params/task_get_params.dart';
-import 'package:hazloo_app/models/response/example_response.dart';
-import 'package:hazloo_app/models/response/task_response.dart';
-import 'package:hazloo_app/utils/dialogs.dart';
+import 'package:hazloo_app/models/response/log_response.dart';
 import 'package:hazloo_app/widgets/generic_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../bloc/bloc.dart';
@@ -18,9 +16,10 @@ class LogPage extends StatefulWidget {
 }
 
 class _LogPageState extends State<LogPage> {
-  TaskBloc? _taskBloc;
-  List<TaskResponse> listRequest = [];
-  List<TaskResponse> listRequestTemp = [];
+  
+  LogBloc? _logBloc;
+  List<LogResponse> listRequest = [];
+  List<LogResponse> listRequestTemp = [];
   int userId = 0;
   late TaskGetParams params;
 
@@ -37,8 +36,10 @@ class _LogPageState extends State<LogPage> {
 
   @override
   void initState() {
-    _taskBloc = BlocProvider.of<TaskBloc>(context);
-    _taskBloc?.add(const EventGetTaskByParams(userId: 1, title: ''));
+
+    _logBloc = BlocProvider.of<LogBloc>(context);
+    _logBloc?.add(EventLogList(userId: 1));
+
     // initialData();
 
     super.initState();
@@ -59,7 +60,7 @@ class _LogPageState extends State<LogPage> {
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       onRefresh: () async {
         // TaskGetParams? params = TaskGetParams(project: '', title: '', user: userId);
-        _taskBloc?.add(EventGetTaskByParams(userId: 1, title: ''));
+        _logBloc?.add(const EventLogList(userId: 1));
       },
       child: Scaffold(
         appBar: AppBar(
@@ -77,32 +78,32 @@ class _LogPageState extends State<LogPage> {
           elevation: 0,
           backgroundColor: const Color.fromARGB(255, 3, 63, 112),
         ),
-        body: BlocConsumer<TaskBloc, TaskState>(
+        body: BlocConsumer<LogBloc, LogState>(
           listener: (context, state) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-            if (state is IsLoadingListTask) {
-            } else if (state is SuccessListTask) {
+            if (state is IsLoadingLogList) {
+            } else if (state is SuccessLogList) {
               setState(() {
                 listRequest = state.listResponse!;
                 listRequestTemp = state.listResponse!;
               });
             }
-            if (state is ErrorListTask) {
+            if (state is ErrorLogList) {
               message(state.messageError!, Colors.red);
               // snackbarError(context, state.messageError!);
             }
           },
           builder: (context, state) {
-            if (state is ErrorListTask) {
+            if (state is ErrorLogList) {
               return errorWidget;
             }
 
-            if (state is IsLoadingListTask) {
+            if (state is IsLoadingLogList) {
               return loadingWidget;
             }
 
-            if (state is SuccessListTask) {
+            if (state is SuccessLogList) {
               if (state.listResponse!.isEmpty) {
                 return emptyWidget;
               }
